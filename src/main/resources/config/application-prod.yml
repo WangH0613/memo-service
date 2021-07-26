@@ -1,0 +1,15 @@
+#开发环境配置
+debug: false
+
+#开发环境配置端口
+server:
+  port: 8888
+
+# Spring 配置
+spring:
+  datasource:
+    druid:
+      #开发环境数据库地址
+      url: jdbc:mysql://81.70.213.249:3306/memo-prod?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&tinyInt1isBit=false
+      username: root
+      password: root

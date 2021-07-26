@@ -1,0 +1,83 @@
+# tomcat配置
+server:
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /memo/biz/v1
+
+# spring配置
+spring:
+  profiles:
+    active: @profiles.active@
+  application:
+    name: MEMO_SERVICE
+  devtools:
+    restart:
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+# 持久层组件配置
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: cn.com.koriesh.memo.entity
+  configuration:
+    # 以下配置将输出sql语句及结果
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    # 以下配置将不输出sql语句及结果
+#    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+#    auto-mapping-behavior: partial
+#    map-underscore-to-camel-case: true
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countsq
+
+# 日志配置
+logging:
+  level:
+    org.springframework.boot.autoconfigure: ERROR
+    com.netflix: ERROR
+
+# jwt相关配置
+jwt:
+  # jwt秘钥
+  secretKey: WAbt0P4336T^%X6&t0BE5414t2rvJpYsfBfoW^mp#KB79^ZdSA0qJTs#BCjcO^q@
+  # jwt有效时间 2小时 PT2H
+  accessTokenExpireTime: PT2H
+  # jwt刷新时间 8小时 PT8H
+  refreshTokenExpireTime: PT8H
+  # jwt签发人 nsmm
+  issuer: nsmm
+
+# 调用本机的公共api接口 验证参数key
+openapi:
+  apiKey: memoApiKey
+
+## ------------------------ 以下是EurekaClient的固定配置 -------------
+eureka:
+  client:
+    registry-fetch-interval-seconds: 2
+  instance:
+    prefer-ip-address: true
+    lease-renewal-interval-in-seconds: 1
+    lease-expiration-duration-in-seconds: 3
+    health-check-url-path: /actuator/health
+
+
+management:
+  endpoint:
+    shutdown:
+      enabled: false
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+

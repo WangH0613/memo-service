@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.com.koriesh.memo.mapper.NsmmUserBizLogMapper">
+	
+	<sql id="Base_Column_List">
+		USER_BIZ_LOG_ID, USER_ID, USER_BH, USER_REAL_NAME, USER_ROLE_ID, USER_ROLE_NAME,
+        USER_DEPT_ID, USER_DEPT_NAME, REQUEST_FROM_IP, REQUEST_TO_URL, CLASS_NAME, METHOD_NAME,
+        OPERATION_TYPE, OPERATION_NAME, RESPONSE_STATUS, RESPONSE_MESSAGE, RESPONSE_DATA,
+        RESPONSE_PAGE, GENERATE_DATE
+	</sql>
+	
+	<sql id="Base_Table_Name">
+		NSMM_USER_BIZ_LOG
+	</sql>
+	
+	<!-- 通用的sql方法包括四种 按照 增 删 查 改 的顺序依次编写 -->
+	<!-- 增： insert 传入实体进行处理 -->
+	<!-- 删： delete 传入PageData进行处理 -->
+	<!-- 查： get/listAll/listPage传入PageData进行处理-->
+	<!-- 改： update 传入实体进行处理 -->
+	
+	<insert id="insert" parameterType="NsmmUserBizLog">
+		insert into
+		<include refid="Base_Table_Name"/>
+		(USER_ID, USER_BH,
+		USER_REAL_NAME, USER_ROLE_ID, USER_ROLE_NAME,
+		USER_DEPT_ID, USER_DEPT_NAME, REQUEST_FROM_IP,
+		REQUEST_TO_URL, CLASS_NAME, METHOD_NAME,
+		OPERATION_TYPE, OPERATION_NAME, RESPONSE_STATUS,
+		RESPONSE_MESSAGE, RESPONSE_DATA, RESPONSE_PAGE,
+		GENERATE_DATE)
+		values (#{userId,jdbcType=VARCHAR}, #{userBh,jdbcType=VARCHAR},
+		#{userRealName,jdbcType=VARCHAR}, #{userRoleId,jdbcType=VARCHAR}, #{userRoleName,jdbcType=VARCHAR},
+		#{userDeptId,jdbcType=VARCHAR}, #{userDeptName,jdbcType=VARCHAR}, #{requestFromIp,jdbcType=VARCHAR},
+		#{requestToUrl,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, #{methodName,jdbcType=VARCHAR},
+		#{operationType,jdbcType=VARCHAR}, #{operationName,jdbcType=VARCHAR}, #{responseStatus,jdbcType=VARCHAR},
+		#{responseMessage,jdbcType=VARCHAR}, #{responseData,jdbcType=VARCHAR}, #{responsePage,jdbcType=VARCHAR},
+		#{generateDate,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<delete id="delete" parameterType="PageData">
+		delete
+		from
+		<include refid="Base_Table_Name"/>
+		where
+		USER_BIZ_LOG_ID = #{userBizLogId,jdbcType=BIGINT}
+	</delete>
+	
+	<select id="get" parameterType="PageData">
+		select
+		<include refid="Base_Column_List"/>
+		from
+		<include refid="Base_Table_Name"/>
+		where
+		USER_BIZ_LOG_ID = #{userBizLogId,jdbcType=BIGINT}
+	</select>
+	
+	<select id="listAll" resultType="NsmmUserBizLog" parameterType="PageData">
+		select
+		<include refid="Base_Column_List"/>
+		from
+		<include refid="Base_Table_Name"/>
+	</select>
+	
+	<select id="listPage" resultType="NsmmUserBizLog" parameterType="PageData">
+		select
+		<include refid="Base_Column_List"/>
+		from
+		<include refid="Base_Table_Name"/>
+	</select>
+	
+	<update id="update" parameterType="NsmmUserBizLog">
+		update
+		<include refid="Base_Table_Name"/>
+		set
+		USER_ID = #{userId,jdbcType=VARCHAR},
+		USER_BH = #{userBh,jdbcType=VARCHAR},
+		USER_REAL_NAME = #{userRealName,jdbcType=VARCHAR},
+		USER_ROLE_ID = #{userRoleId,jdbcType=VARCHAR},
+		USER_ROLE_NAME = #{userRoleName,jdbcType=VARCHAR},
+		USER_DEPT_ID = #{userDeptId,jdbcType=VARCHAR},
+		USER_DEPT_NAME = #{userDeptName,jdbcType=VARCHAR},
+		REQUEST_FROM_IP = #{requestFromIp,jdbcType=VARCHAR},
+		REQUEST_TO_URL = #{requestToUrl,jdbcType=VARCHAR},
+		CLASS_NAME = #{className,jdbcType=VARCHAR},
+		METHOD_NAME = #{methodName,jdbcType=VARCHAR},
+		OPERATION_TYPE = #{operationType,jdbcType=VARCHAR},
+		OPERATION_NAME = #{operationName,jdbcType=VARCHAR},
+		RESPONSE_STATUS = #{responseStatus,jdbcType=VARCHAR},
+		RESPONSE_MESSAGE = #{responseMessage,jdbcType=VARCHAR},
+		RESPONSE_DATA = #{responseData,jdbcType=VARCHAR},
+		RESPONSE_PAGE = #{responsePage,jdbcType=VARCHAR},
+		GENERATE_DATE = #{generateDate,jdbcType=TIMESTAMP}
+		where
+		USER_BIZ_LOG_ID = #{userBizLogId,jdbcType=BIGINT}
+	</update>
+
+</mapper>

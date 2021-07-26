@@ -1,0 +1,33 @@
+#开发环境配置
+debug: true
+
+#开发环境配置端口
+server:
+  port: 8080
+
+# Spring 配置
+spring:
+  application:
+    name: microservicecloud-dept
+  datasource:
+    type: com.mysql.cj.jdbc.MysqlDataSource            # 当前数据源操作类型
+    driver-class-name: com.mysql.jdbc.Driver             # mysql驱动包
+    #开发环境数据库地址
+    url: jdbc:mysql://81.70.213.249:3306/memo-dev?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&tinyInt1isBit=false
+    username: root
+    password: root
+    dbcp2:
+      min-idle: 5                                           # 数据库连接池的最小维持连接数
+      initial-size: 5                                       # 初始化连接数
+      max-total: 5                                          # 最大连接数
+      max-wait-millis: 200                                  # 等待连接获取的最大超时时间
+eureka:
+  client:
+    #是否向服务注册中心注册自己 开发模式下不注册
+    registerWithEureka: false
+    #是否检索服务 开发模式下不检索
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://localhost:21001/eureka/
+  instance:
+    prefer-ip-address: true

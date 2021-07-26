@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+	
+	<property
+			name="CONSOLE_LOG_PATTERN"
+			value="%date{yyyy-MM-dd HH:mm:ss.SSS} - %-5level[%thread] - %logger{56}.%method - %msg%n"/>
+	
+	<appender name="consoleApp" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</layout>
+	</appender>
+	
+	<appender name="fileInfoApp" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/info.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>INFO</level>
+			<onMatch>DENY</onMatch>
+			<onMismatch>ACCEPT</onMismatch>
+		</filter>
+		<encoder>
+			<pattern>
+				%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level[%thread]%logger{56}.%method:%L -%msg%n
+			</pattern>
+		</encoder>
+		<!-- 滚动策略 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 路径 -->
+			<fileNamePattern>logs/%d{yyyy-MM-dd,aux}/info.%d.log</fileNamePattern>
+			<MaxHistory>1</MaxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="fileErrorApp" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/error.log</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<encoder>
+			<pattern>
+				%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level[%thread]%logger{56}.%method:%L -%msg%n
+			</pattern>
+		</encoder>
+		<!-- 设置滚动策略 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 路径 -->
+			<fileNamePattern>logs/%d{yyyy-MM-dd,aux}/error.%d.log</fileNamePattern>
+			<!-- 控制保留的归档文件的最大数量，超出数量就删除旧文件，假设设置每个月滚动，
+			且<maxHistory> 是1，则只保存最近1个月的文件，删除之前的旧文件 -->
+			<MaxHistory>1</MaxHistory>
+		</rollingPolicy>
+	</appender>
+	
+	<appender name="userBizLogApp" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/userBiz.log</file>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+		<encoder>
+			<pattern>
+				%msg%n
+			</pattern>
+		</encoder>
+		<!-- 设置滚动策略 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- 路径 -->
+			<fileNamePattern>logs/%d{yyyy-MM-dd,aux}/userBiz.%d.log</fileNamePattern>
+			<!-- 控制保留的归档文件的最大数量，超出数量就删除旧文件，假设设置每个月滚动，
+			且<maxHistory> 是1，则只保存最近1个月的文件，删除之前的旧文件 -->
+			<MaxHistory>1</MaxHistory>
+		</rollingPolicy>
+	</appender>
+	
+	<logger name="userBizLog" additivity="false" level="INFO">
+		<appender-ref ref="userBizLogApp"/>
+	</logger>
+	
+	<root level="INFO">
+		<appender-ref ref="consoleApp"/>
+		<appender-ref ref="fileInfoApp"/>
+		<appender-ref ref="fileErrorApp"/>
+		<appender-ref ref="fileWarnApp"/>
+		<appender-ref ref="fileDebugApp"/>
+	</root>
+
+</configuration>
